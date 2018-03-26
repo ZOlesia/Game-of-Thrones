@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function(){
+
+
+
+        $("img").click(function(){
+            var house = $(this).attr("id");
+            $.get(`https://www.anapioficeandfire.com/api/houses/${house}`, function(res){
+
+                var titlesWithComa = "";
+                for(var i=0; i<res.titles.length; i++){
+                    titlesWithComa += res.titles[i] + ', ';
+                    if(res.titles.length-1 === i){
+                        titlesWithComa += res.titles[i] + '.'
+                    }
+                }
+
+                $("fieldset").html(`
+                <legend>House Details</legend>
+                    <p>Name: ${res.name}</p>
+                    <p>Words: ${res.words}</p>
+                    <p>Titles: ${titlesWithComa}</p>
+                    
+                    `)
+                
+                   
+            }, "json");
+        })
+    });  
+</script>
+
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    #images{
+        width: 1015px;
+        height: auto;
+        margin: 20px auto;
+    }
+    img{
+        width: 250px;
+        height: 200px;
+    }
+
+
+    fieldset{
+        width: 550px;
+        margin: 0 auto;
+        height: 300px;
+    }
+
+    p{
+        margin: 30px;
+    }
+
+    .titles{
+        margin: 50px 30px;
+    }
+</style>
+</head>
+<body>
+        <div id="images">
+            <img src="baratheon.png" alt="baratheon" id="17">
+            <img src="lannister.jpg" alt="lannister" id="229">
+            <img src="stark.jpg" alt="stark" id="362">
+            <img src="targaryen.jpg" alt="targaryen" id="378">
+        </div>
+
+        <fieldset>
+            <legend>House Details</legend>
+            <p id="name">Name: </p>
+            <p id="words">Words: </p>
+            <p class="titles">Titles: </p>
+        </fieldset>
+
+</body>
+</html>
